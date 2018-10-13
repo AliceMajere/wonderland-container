@@ -9,28 +9,28 @@ namespace Wonderland\Container\Service;
  */
 class InstanceDefinition implements ServiceInstanceInterface
 {
-    /** @var string */
-    private $serviceName;
+	/** @var string */
+	private $serviceName;
 
-    /** @var mixed */
-    private $instance;
+	/** @var mixed */
+	private $instance;
 
-    public function __construct(string $serviceName, $instance)
-    {
-        $this->serviceName = $serviceName;
-        $this->instance = $instance;
-    }
+	public function __construct(string $serviceName, $instance)
+	{
+		$this->serviceName = $serviceName;
+		$this->instance = $instance;
+	}
 
-    /** @return string */
-    public function getServiceName()
-    {
-        return $this->serviceName;
-    }
+	/** @return string */
+	public function getServiceName()
+	{
+		return $this->serviceName;
+	}
 
-    /** @return mixed */
-    public function getInstance()
-    {
-        return $this->instance;
-    }
+	/** @return mixed */
+	public function getInstance()
+	{
+		return $this->instance;
+	}
 
 }

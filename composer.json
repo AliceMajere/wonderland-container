@@ -44,6 +44,9 @@
         ],
         "phpcs": [
             "vendor/bin/phpcs src/* tests/* --standard=phpcs.xml --extensions=php -sp"
+        ],
+        "phpcbs": [
+            "vendor/bin/phpcbf src/* tests/* --standard=phpcs.xml --extensions=php -sp"
         ]
     }
 }

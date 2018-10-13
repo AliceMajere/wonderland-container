@@ -9,15 +9,17 @@ namespace Wonderland\Container\Service;
  */
 interface ServiceDefinitionInterface
 {
-    /** @return string */
-    public function getServiceName();
 
-    /** @return string */
-    public function getClass();
+	/** @return string */
+	public function getServiceName();
 
-    /** @return array */
-    public function getConstructArgs();
+	/** @return string */
+	public function getClass();
 
-    /** @return array */
-    public function getCalls();
+	/** @return array */
+	public function getConstructArgs();
+
+	/** @return array */
+	public function getCalls();
+
 }

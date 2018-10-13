@@ -9,9 +9,11 @@ namespace Wonderland\Container\Service;
  */
 interface ServiceInstanceInterface
 {
-    /** @return string */
-    public function getServiceName();
 
-    /** @return mixed */
-    public function getInstance();
+	/** @return string */
+	public function getServiceName();
+
+	/** @return mixed */
+	public function getInstance();
+
 }
