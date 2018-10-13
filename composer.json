@@ -1,0 +1,22 @@
+{
+    "name": "alicemajere/wonderland-container",
+    "description": "A small simple service container to include in projects",
+    "type": "library",
+    "license": "MIT License",
+    "authors": [
+        {
+            "name": "Alice Praud",
+            "email": "alice.majere@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Wonderland\\Container\\": "src/"
+        },
+        "classmap": [
+        ]
+    },
+    "require": {
+        "psr/container": "^1.0"
+    }
+}
