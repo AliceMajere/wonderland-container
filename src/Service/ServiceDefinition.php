@@ -7,7 +7,7 @@ namespace Wonderland\Container\Service;
  * @package Wonderland\Container\Container\Service
  * @author Alice Praud <alice.majere@gmail.com>
  */
-class Definition implements ServiceDefinitionInterface
+class ServiceDefinition implements ServiceDefinitionInterface
 {
 	/** @var string */
 	private $serviceName;

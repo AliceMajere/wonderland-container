@@ -1,6 +1,6 @@
 <?php
 
-namespace Wonderland\Container\Container;
+namespace Wonderland\Container;
 
 use Wonderland\Container\Service\ServiceDefinitionInterface;
 use Wonderland\Container\Exception\DuplicatedServiceException;
@@ -12,7 +12,7 @@ use Wonderland\Container\Service\ServiceInstanceInterface;
  * @package Wonderland\Container\Container
  * @author Alice Praud <alice.majere@gmail.com>
  */
-final class ServiceContainer implements ContainerInterface
+class ServiceContainer implements ContainerInterface
 {
 	/** @var ServiceDefinitionInterface[] */
 	private $services;

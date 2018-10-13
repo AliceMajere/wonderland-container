@@ -40,7 +40,7 @@ Create a new service definition and register it in the container with the follow
 parameters
 ```php
 // creating a service definition
-$definition = new Wonderland\Container\Service\Definition(
+$definition = new Wonderland\Container\Service\ServiceDefinition(
     'service.name',
     MyClass::class,
     ['args1', 'service.name2', ['array_args']],
