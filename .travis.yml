@@ -1,1 +1,18 @@
 language: php
+
+php:
+- 7.2
+- master
+
+sudo: false
+
+install: travis_retry composer install --prefer-source
+
+script: composer ci
+
+notifications:
+    email:
+        recipients:
+        - alice.majere@gmail.com
+        on_success: change
+        on_failure: always
