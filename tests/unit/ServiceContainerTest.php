@@ -15,6 +15,7 @@ use Wonderland\Container\Service\ServiceDefinitionInterface;
  */
 class ServiceContainerTest extends TestCase
 {
+
 	public function test_addService()
 	{
 		$definition = $this->getMockBuilder(ServiceDefinitionInterface::class)->getMock();
@@ -27,6 +28,7 @@ class ServiceContainerTest extends TestCase
 	}
 
 //	 * @expectedException DuplicatedServiceException
+
 	/**
 	 */
 	public function test_addServiceInstance()
@@ -36,7 +38,6 @@ class ServiceContainerTest extends TestCase
 		$instance->expects($this->once())
 			->method('getServiceName')
 			->willReturn('service.name');
-
 
 		$this->assertSame('service.name', $instance->getServiceName());
 	}
@@ -52,4 +53,5 @@ class ServiceContainerTest extends TestCase
 
 		$this->assertSame($object, $instance->getInstance());
 	}
+
 }
