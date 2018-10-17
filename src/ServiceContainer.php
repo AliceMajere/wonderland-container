@@ -30,14 +30,18 @@ class ServiceContainer implements ContainerInterface
 
 	/**
 	 * @param ServiceDefinitionInterface $serviceDefinition
+	 * @return ServiceContainer
 	 */
 	public function addService(ServiceDefinitionInterface $serviceDefinition)
 	{
 		$this->services[$serviceDefinition->getServiceName()] = $serviceDefinition;
+
+		return $this;
 	}
 
 	/**
 	 * @param ServiceInstanceInterface $definition
+	 * @return ServiceContainer
 	 * @throws DuplicatedServiceException
 	 */
 	public function addServiceInstance(ServiceInstanceInterface $definition)
@@ -49,6 +53,8 @@ class ServiceContainer implements ContainerInterface
 		}
 
 		$this->serviceInstances[$definition->getServiceName()] = $definition->getInstance();
+
+		return $this;
 	}
 
 	/**
