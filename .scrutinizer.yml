@@ -15,4 +15,3 @@ tools:
 filter:
     excluded_paths:
     - 'vendor/*'
-    - 'var/*'
