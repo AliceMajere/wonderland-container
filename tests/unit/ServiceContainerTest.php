@@ -110,7 +110,7 @@ class ServiceContainerTest extends TestCase
 		$this->assertSame($instance, $this->realContainer->get(self::DEFAULT_SERVICE_NANE));
 
 		$this->realContainer->addServiceInstance(
-			new InstanceDefinition('call.format', "d-m-Y")
+			new InstanceDefinition('call.format', 'd-m-Y')
 		);
 
 		$this->realContainer->addService(
@@ -132,4 +132,5 @@ class ServiceContainerTest extends TestCase
 		$this->assertSame(true, $this->realContainer->has(self::DEFAULT_SERVICE_NANE));
 		$this->assertSame(true, $this->realContainer->has(self::DEFAULT_SERVICE_NANE));
 	}
+
 }
