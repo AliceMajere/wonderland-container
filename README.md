@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AliceMajere/wonderland-container.svg?branch=master)](https://travis-ci.org/AliceMajere/wonderland-container) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/?branch=master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 # Wonderland Container
 A small simple service container to include in projects
 
