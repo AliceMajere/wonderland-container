@@ -1,28 +1,17 @@
 [![Build Status](https://travis-ci.org/AliceMajere/wonderland-container.svg?branch=master)](https://travis-ci.org/AliceMajere/wonderland-container) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/?branch=master) [![Code Intelligence Status](https://scrutinizer-ci.com/g/AliceMajere/wonderland-container/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 
 # Wonderland Container
+
 A small simple service container to include in projects
 
 ## Recent Update
 
-The project just got initialized. More to come, see the issues board to know more about the progress of the project
+The project just got released on packagist with release 1.0.0. 
 
 ## Installation
 
-`Composer coming soon`
-
-Add the repository and the package in your composer.json 
-
 ```
-"repositories": [
-    { "type": "vcs", "url": "https://github.com/AliceMajere/wonderland-container" }
-]
-```
-
-```
-"require": {
-    "alicemajere/wonderland-container": "[VERSION]"
-}
+composer require alicemajere/wonderland-container
 ```
 
 ## Usage
@@ -90,7 +79,8 @@ $instance = $container->get('service.name2');
 ```
 
 ## Prerequisites
-PHP >= 7.0
+
+PHP >= 7.2
 
 ## Getting help
 
