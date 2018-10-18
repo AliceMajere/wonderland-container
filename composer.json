@@ -2,7 +2,7 @@
     "name": "alicemajere/wonderland-container",
     "description": "A small simple service container to include in projects",
     "type": "library",
-    "license": "MIT License",
+    "license": "MIT",
     "authors": [
         {
             "name": "Alice Praud",
