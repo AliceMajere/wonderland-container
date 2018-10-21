@@ -159,18 +159,31 @@ class ServiceContainerTest extends TestCase
 		$this->realContainer->addServiceInstance(
 			new InstanceDefinition('call.format', 'd-m-Y')
 		);
+		$this->realContainer->addServiceInstance(
+			new InstanceDefinition('call.date', '1970-01-01')
+		);
 
 		$this->realContainer->addService(
 			new ServiceDefinition(
 				'service.call',
 				\DateTime::class,
+				['@call.date'],
+				['format' => ['@call.format']]
+			)
+		);
+
+		$this->realContainer->addService(
+			new ServiceDefinition(
+				'service.call2',
+				\DateTime::class,
 				['1970-01-01'],
-				['format' => ['call.format']]
+				['format' => ['Y-m-d']]
 			)
 		);
 
 		$date = new \DateTime('1970-01-01');
 		$this->assertSame($date->format('m-d-Y'), $this->realContainer->get('service.call')->format('m-d-Y'));
+		$this->assertSame($date->format('m-d-Y'), $this->realContainer->get('service.call2')->format('m-d-Y'));
 	}
 
 	public function test_has()
@@ -178,6 +191,9 @@ class ServiceContainerTest extends TestCase
 		$this->assertSame(false, $this->realContainer->has('fake'));
 		$this->assertSame(true, $this->realContainer->has(self::DEFAULT_SERVICE_NANE));
 		$this->assertSame(true, $this->realContainer->has(self::DEFAULT_SERVICE_NANE));
+
+		$this->realContainer->addServiceInstance(new InstanceDefinition('instance.name', \DateTime::class));
+		$this->assertSame(true, $this->realContainer->has('instance.name'));
 	}
 
 }

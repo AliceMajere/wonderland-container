@@ -32,7 +32,11 @@ class YamlParser implements ParserInterface
 
 		$parse = Yaml::parseFile($filePath);
 
-		return false === is_array($parse) ? [] : $parse;
+		if (false === is_array($parse)) {
+			$parse = [];
+		}
+
+		return $parse;
 	}
 
 	/**
