@@ -39,8 +39,8 @@ parameters
 $definition = new Wonderland\Container\Service\ServiceDefinition(
     'service.name',
     MyClass::class,
-    ['args1', 'service.name2', ['array_args']],
-    ['methodCall1' => ['args1', 'service.name3']]
+    ['args1', '@service.name2', ['array_args']],
+    ['methodCall1' => ['args1', '@service.name3']]
 );
 
 // register the definition into the container
@@ -105,7 +105,7 @@ services:
         calls:
             callMethod:
                 - 'param11'
-                - 'param22'
+                - '@service.name3'
     service.name2:
         class: Wonderland\Container\Example\Yml\SampleClass
         arguments:
@@ -113,7 +113,7 @@ services:
             - 'param4'
         calls:
             callMethod:
-                - 'param33'
+                - '@service.name'
                 - 'param44'
 
     service.name3:
