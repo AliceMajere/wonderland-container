@@ -1,0 +1,8 @@
+services:
+    servicename:
+        class: \DateTime
+        arguments:
+            -
+        calls: ~
+
+

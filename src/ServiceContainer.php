@@ -2,10 +2,10 @@
 
 namespace Wonderland\Container;
 
+use Wonderland\Container\Service\InstanceDefinitionInterface;
 use Wonderland\Container\Service\ServiceDefinitionInterface;
 use Wonderland\Container\Exception\DuplicatedServiceException;
 use Psr\Container\ContainerInterface;
-use Wonderland\Container\Service\ServiceInstanceInterface;
 
 /**
  * Class ServiceContainer
@@ -14,6 +14,8 @@ use Wonderland\Container\Service\ServiceInstanceInterface;
  */
 class ServiceContainer implements ContainerInterface
 {
+	private const SERVICE_PREFIX = '@';
+
 	/** @var ServiceDefinitionInterface[] */
 	private $services;
 
@@ -25,30 +27,52 @@ class ServiceContainer implements ContainerInterface
 	 */
 	public function __construct()
 	{
+		$this->services = [];
 		$this->serviceInstances = [];
 	}
 
 	/**
 	 * @param ServiceDefinitionInterface $serviceDefinition
 	 * @return ServiceContainer
+	 * @throws DuplicatedServiceException
 	 */
 	public function addService(ServiceDefinitionInterface $serviceDefinition)
 	{
+		if (true === $this->has($serviceDefinition->getServiceName())) {
+			throw new DuplicatedServiceException(
+				'The service "' . $serviceDefinition->getServiceName() . '" is already registered in the container'
+			);
+		}
+
 		$this->services[$serviceDefinition->getServiceName()] = $serviceDefinition;
 
 		return $this;
 	}
 
 	/**
-	 * @param ServiceInstanceInterface $definition
+	 * @param ServiceDefinitionInterface[] $definitionList
 	 * @return ServiceContainer
 	 * @throws DuplicatedServiceException
 	 */
-	public function addServiceInstance(ServiceInstanceInterface $definition)
+	public function loadServices(array $definitionList)
 	{
-		if (true === array_key_exists($definition->getServiceName(), $this->serviceInstances)) {
+		foreach ($definitionList as $definition) {
+			$this->addService($definition);
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @param InstanceDefinitionInterface $definition
+	 * @return ServiceContainer
+	 * @throws DuplicatedServiceException
+	 */
+	public function addServiceInstance(InstanceDefinitionInterface $definition)
+	{
+		if (true === $this->has($definition->getServiceName())) {
 			throw new DuplicatedServiceException(
-				'The service' . $definition->getServiceName() . ' is already registered in the container'
+				'The service "' . $definition->getServiceName() . '" is already registered in the container'
 			);
 		}
 
@@ -64,6 +88,8 @@ class ServiceContainer implements ContainerInterface
 	 */
 	public function get($index, $new = false)
 	{
+		$index = $this->cleanServiceName($index);
+
 		// if service is shared true and already exists we return it
 		if (isset($this->serviceInstances[$index]) && false === $new) {
 			return $this->serviceInstances[$index];
@@ -98,6 +124,8 @@ class ServiceContainer implements ContainerInterface
 	 */
 	public function has($index)
 	{
+		$index = $this->cleanServiceName($index);
+
 		// if service is shared true and already exists we return it
 		if (isset($this->serviceInstances[$index])) {
 			return true;
@@ -142,6 +170,10 @@ class ServiceContainer implements ContainerInterface
 	{
 		// we check if any of the construct args are services themself and we create them
 		foreach ($args as $k => $arg) {
+			if (false === $this->isServiceName($arg)) {
+				continue;
+			}
+
 			if (true === $this->has($arg)) {
 				$args[$k] = $this->get($arg);
 			}
@@ -157,15 +189,37 @@ class ServiceContainer implements ContainerInterface
 	private function checkCallsServices(array $calls)
 	{
 		// we check if any of the calls args are services themself and we create them
-		foreach ($calls as $callArgs) {
+		foreach ($calls as $i => $callArgs) {
 			foreach ($callArgs as $k => $arg) {
+				if (false === $this->isServiceName($arg)) {
+					continue;
+				}
+
 				if (true === $this->has($arg)) {
-					$args[$k] = $this->get($arg);
+					$calls[$i][$k] = $this->get($arg);
 				}
 			}
 		}
 
 		return $calls;
+	}
+
+	/**
+	 * @param string $str
+	 * @return bool
+	 */
+	private function isServiceName(string $str)
+	{
+		return self::SERVICE_PREFIX === substr($str, 0, 1);
+	}
+
+	/**
+	 * @param string $str
+	 * @return string
+	 */
+	private function cleanServiceName(string $str)
+	{
+		return trim($str, self::SERVICE_PREFIX);
 	}
 
 }

@@ -1,0 +1,16 @@
+services:
+    service1:
+        class: \Datetime
+        arguments:
+            - '1970-01-01'
+
+    service2:
+        class: \Datetime
+        arguments:
+            - '2018-12-31'
+        calls:
+            format:
+                - 'Y-m-d'
+
+    service3:
+        class: \Datetime

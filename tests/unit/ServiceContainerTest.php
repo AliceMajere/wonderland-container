@@ -27,6 +27,9 @@ class ServiceContainerTest extends TestCase
 	/** @var ServiceContainer */
 	private $realContainer;
 
+	/**
+	 * @throws DuplicatedServiceException
+	 */
 	protected function setUp()
 	{
 		$this->container = $this->getMockBuilder(ServiceContainer::class)->getMock();
@@ -41,6 +44,7 @@ class ServiceContainerTest extends TestCase
 
 	/**
 	 * @covers \Wonderland\Container\ServiceContainer::addService
+	 * @throws DuplicatedServiceException
 	 */
 	public function test_AddService()
 	{
@@ -49,16 +53,57 @@ class ServiceContainerTest extends TestCase
 			->getMock();
 		;
 
-		$definition->expects($this->once())
+		$definition->expects($this->exactly(2))
 			->method('getServiceName')
 			->willReturn(self::SERVICE_NAME);
 
-		$this->container->expects($this->once())
-			->method('addService')
-			->willReturn($this->container);
-
-		$this->assertSame($this->container, $this->container->addService($definition));
 		$this->assertSame($this->realContainer, $this->realContainer->addService($definition));
+	}
+
+	/**
+	 * @throws DuplicatedServiceException
+	 */
+	public function test_AddServiceException()
+	{
+		$this->expectException(DuplicatedServiceException::class);
+
+		$definition = $this->getMockBuilder(ServiceDefinition::class)
+			->setConstructorArgs([self::SERVICE_NAME, \DateTime::class])
+			->getMock();
+		;
+
+		$definition->expects($this->exactly(4))
+			->method('getServiceName')
+			->willReturn(self::SERVICE_NAME);
+
+		$this->realContainer->addService($definition);
+		$this->realContainer->addService($definition);
+	}
+
+	public function test_loadServices()
+	{
+		$definition = $this->getMockBuilder(ServiceDefinition::class)
+			->setConstructorArgs([self::SERVICE_NAME . '10', \DateTime::class])
+			->getMock();
+		;
+		$definition2 = $this->getMockBuilder(ServiceDefinition::class)
+			->setConstructorArgs([self::SERVICE_NAME . '20', \DateTime::class])
+			->getMock();
+		;
+
+		$list = [
+			$definition,
+			$definition2
+		];
+
+		$definition->expects($this->exactly(2))
+			->method('getServiceName')
+			->willReturn(self::SERVICE_NAME . '10');
+		$definition2->expects($this->exactly(2))
+			->method('getServiceName')
+			->willReturn(self::SERVICE_NAME . '20');
+
+		$this->realContainer->loadServices($list);
 	}
 
 	/**
@@ -93,14 +138,16 @@ class ServiceContainerTest extends TestCase
 			->setConstructorArgs([self::SERVICE_NAME, new \DateTime()])
 			->getMock();
 
-		$definition->expects($this->atLeast(2))
+		$definition->expects($this->exactly(2))
 			->method('getServiceName')
-			->willReturn(self::SERVICE_NAME);
+			->willReturn(self::DEFAULT_SERVICE_NANE);
 
-		$this->realContainer->addServiceInstance($definition);
 		$this->realContainer->addServiceInstance($definition);
 	}
 
+	/**
+	 * @throws DuplicatedServiceException
+	 */
 	public function test_get()
 	{
 		$this->assertSame(null, $this->realContainer->get('test'));

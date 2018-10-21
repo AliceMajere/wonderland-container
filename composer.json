@@ -16,12 +16,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Wonderland\\Container\\Tests\\": "tests/unit/"
+            "Wonderland\\Container\\Tests\\": "tests/unit/",
+            "Wonderland\\Container\\Example\\": "examples/"
         }
     },
     "require": {
         "php": ">=7.2",
-        "psr/container": "^1.0"
+        "psr/container": "^1.0",
+        "symfony/yaml": "^4.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",

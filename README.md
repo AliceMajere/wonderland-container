@@ -5,14 +5,13 @@
 [![Latest Stable Version](https://poser.pugx.org/alicemajere/wonderland-container/v/stable.png)](https://packagist.org/packages/alicemajere/wonderland-container)
 [![Total Downloads](https://poser.pugx.org/alicemajere/wonderland-container/downloads)](https://packagist.org/packages/alicemajere/wonderland-container)
 
-
 # Wonderland Container
 
 A small simple service container to include in projects
 
 ## Recent Update
 
-The project just got released on packagist with release 1.0.0. 
+Update 1.1.0 available. Check the [release page](https://github.com/AliceMajere/wonderland-container/releases) for the changelog
 
 ## Installation
 
@@ -83,6 +82,47 @@ $newInstance = $container->get('service.name', true);
 // the service is not a definition service but a instance definition service; only the shared instance will be retrieved
 $instance = $container->get('service.name2');
 ```
+
+### Loading configuration with YAML files
+
+``` php
+$container = new \Wonderland\Container\ServiceContainer();
+$serviceLoader = new \Wonderland\Container\Configuration\ServiceLoader(new YamlParser());
+// load every yml in a folder
+$container->loadServices($serviceLoader->loadDirectory(__DIR__ . '/Resource/'));
+// or a single file
+$container->loadServices($serviceLoader->loadFile(__DIR__ . '/Resource/test.yml'));
+```
+
+Yaml file examples 
+``` yaml
+services:
+    service.name:
+        class: Wonderland\Container\Example\Yml\SampleClass
+        arguments:
+            - 'param1'
+            - 'param2'
+        calls:
+            callMethod:
+                - 'param11'
+                - 'param22'
+    service.name2:
+        class: Wonderland\Container\Example\Yml\SampleClass
+        arguments:
+            - 'param3'
+            - 'param4'
+        calls:
+            callMethod:
+                - 'param33'
+                - 'param44'
+
+    service.name3:
+        class: \DateTime             
+```
+
+## Examples
+
+You can check out the `examples` folder for more running examples of the library.
 
 ## Prerequisites
 

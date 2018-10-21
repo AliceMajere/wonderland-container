@@ -1,0 +1,16 @@
+services:
+    service.name2:
+        class: Wonderland\Container\Example\Yml\SampleClass
+        arguments:
+            - 'param3'
+            - 'param4'
+        calls:
+            callMethod:
+                - 'param33'
+                - 'param44'
+
+    service.name3:
+        class: Wonderland\Container\Example\Yml\SampleClass
+        arguments:
+            - '@service.name'
+            - '@service.name2'
