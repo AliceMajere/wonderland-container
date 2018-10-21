@@ -65,6 +65,17 @@ class ConfigurationValidator
 			);
 		}
 
+		$this->validateClass($service);
+		$this->validateArguments($service);
+		$this->validateMethods($service);
+	}
+
+	/**
+	 * @param $service
+	 * @throws InvalidConfigFormatException
+	 */
+	private function validateClass($service)
+	{
 		if (false === array_key_exists(Fields::CLASS_CONFIG_NAME, $service)) {
 			throw new InvalidConfigFormatException(
 				self::ERROR_PREFIX . ' key "' . Fields::CLASS_CONFIG_NAME . '" is required'
@@ -76,7 +87,14 @@ class ConfigurationValidator
 				self::ERROR_PREFIX . ' key "' . Fields::CLASS_CONFIG_NAME . '" must be a string'
 			);
 		}
+	}
 
+	/**
+	 * @param $service
+	 * @throws InvalidConfigFormatException
+	 */
+	private function validateArguments($service)
+	{
 		if (true === array_key_exists(Fields::CONSTRUCTOR_PARAMS_CONFIG_NAME, $service) &&
 			false === is_array($service[Fields::CONSTRUCTOR_PARAMS_CONFIG_NAME])
 		) {
@@ -85,7 +103,14 @@ class ConfigurationValidator
 				'" must be an array or null'
 			);
 		}
+	}
 
+	/**
+	 * @param $service
+	 * @throws InvalidConfigFormatException
+	 */
+	private function validateMethods($service)
+	{
 		if (true === array_key_exists(Fields::METHOD_CALLS_CONFIG_NAME, $service) &&
 			false === is_array($service[Fields::METHOD_CALLS_CONFIG_NAME])
 		) {
